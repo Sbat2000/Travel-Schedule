@@ -18,6 +18,10 @@ struct ContentView: View {
             Button("Показать копирайт") {
                 copyright()
             }
+            .padding()
+            Button("Показать маршрут Иркутск - Москва") {
+                getRoutes()
+            }
         }
         .padding()
     }
@@ -52,6 +56,23 @@ struct ContentView: View {
         Task {
             do {
                 let copyright = try await service.getCopyright()
+                print(copyright)
+            } catch {
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func getRoutes() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = SearchRouteService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let copyright = try await service.getRoutes(from: Constants.Cities.irktusk, to: Constants.Cities.moscow, limit: 1)
                 print(copyright)
             } catch {
                 print("Ошибка  \(error)")

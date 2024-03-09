@@ -14,6 +14,10 @@ struct ContentView: View {
             Button("Показать ближайшие станции") {
                 stations()
             }
+            .padding()
+            Button("Показать копирайт") {
+                copyright()
+            }
         }
         .padding()
     }
@@ -26,14 +30,31 @@ struct ContentView: View {
             transport: URLSessionTransport()
         )
         
-        let service = NearestStationsService(client: client, apikey: "6000100a-5e89-4cc3-b086-926ee56549df")
+        let service = NearestStationsService(client: client, apikey: Constants.apiKey)
         
         Task {
             do {
                 let stations = try await service.getNearestStations(lat: 52.253976, lng: 104.327458, distance: 5)
                 print(stations)
             } catch {
-                print("Ошибка")
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func copyright() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = CopyrightService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let copyright = try await service.getCopyright()
+                print(copyright)
+            } catch {
+                print("Ошибка  \(error)")
             }
         }
     }

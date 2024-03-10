@@ -24,7 +24,19 @@ struct ContentView: View {
             }
             .padding()
             Button("Показать расписание аэропорта Иркутск") {
-                getRoutes()
+                getScheduleFor()
+            }
+            .padding()
+            Button("Показать нитку Иркутск - Москва") {
+                getThread()
+            }
+            .padding()
+            Button("Показать ближайший город") {
+                getNearestCity()
+            }
+            .padding()
+            Button("Показать информацию о перевозчике") {
+                getCarrierInfo()
             }
         }
         .padding()
@@ -76,8 +88,8 @@ struct ContentView: View {
         
         Task {
             do {
-                let copyright = try await service.getRoutes(from: Constants.Cities.irktusk, to: Constants.Cities.moscow, limit: 1)
-                print(copyright)
+                let routes = try await service.getRoutes(from: Constants.Cities.irktusk, to: Constants.Cities.moscow, limit: 1)
+                print(routes)
             } catch {
                 print("Ошибка  \(error)")
             }
@@ -93,7 +105,59 @@ struct ContentView: View {
         
         Task {
             do {
-                let schedule = try await service.getScheduleFor(station: Constants.StationCode.airportIrkutst, limit: 5, date: "2024-03-10")
+                let schedule = try await service.getScheduleFor(station: Constants.StationCode.airportIrkutsk, limit: 5, date: "2024-03-10")
+                print(schedule)
+            } catch {
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func getThread() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = ThreadService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let thread = try await service.getThread(threadUID: Constants.threadUID)
+                print(thread)
+            } catch {
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func getNearestCity() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = NearestCityService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let city = try await service.getNearestCity(lat: 52, lng: 104, distance: 50)
+                print(city)
+            } catch {
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func getCarrierInfo() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = CarrierInfoService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let carrier = try await service.getCarrier(code: "156")
+                print(carrier)
             } catch {
                 print("Ошибка  \(error)")
             }

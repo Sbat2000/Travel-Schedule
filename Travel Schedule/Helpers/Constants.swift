@@ -14,8 +14,9 @@ struct Constants {
     }
     
     struct StationCode {
-        static let airportIrkutst = "s9600174"
+        static let airportIrkutsk = "s9600174"
     }
     
     static let apiKey = "6000100a-5e89-4cc3-b086-926ee56549df"
+    static let threadUID = "6R-9802_240401_c156_12"
 }

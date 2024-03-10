@@ -402,6 +402,106 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SingleThread'
+  /v3.0/nearest_settlement/:
+    get:
+      tags:
+        - Ближайший город
+      summary: Ближайший город
+      operationId: getNearestCity
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: lat
+          in: query
+          description: широта
+          required: true
+          schema:
+            type: number
+        - name: lng
+          in: query
+          description: долгота
+          required: true
+          schema:
+            type: number
+        - name: distance
+          in: query
+          description: радиус охвата
+          required: true
+          schema:
+            type: integer
+        - name: format
+          in: query
+          description: json или xml
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: lang
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+  /v3.0/carrier/:
+    get:
+      tags:
+        - Информация о перевозчике
+      summary: Информация о перевозчике
+      operationId: getCarrierInfo
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: code
+          in: query
+          description: carrier code
+          required: true
+          schema:
+            type: string
+        - name: system
+          in: query
+          description: lang
+          required: false
+          schema:
+            type: string
+            enum:
+              - yandex
+              - iata
+              - sirena
+              - express
+              - esr
+        - name: format
+          in: query
+          description: json или xml
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: lang
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Carriers'
 components:
   schemas:
     Stations:
@@ -702,7 +802,7 @@ components:
         thread:
           $ref: '#/components/schemas/Thread'
         is_fuzzy:
-          type: string
+          type: boolean
         days:
           type: string
         stops:
@@ -721,7 +821,7 @@ components:
         thread:
           $ref: '#/components/schemas/Thread'
         is_fuzzy:
-          type: string
+          type: boolean
         days:
           type: string
         stops:
@@ -817,3 +917,31 @@ components:
           $ref: '#/components/schemas/TransportSubtype'
         express_type:
           type: string
+    City:
+      type: object
+      properties:
+        distance:
+          type: number
+        code:
+          type: string
+        title:
+          type: string
+        popular_title:
+          type: string
+        short_title:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        type:
+          type: string
+    Carriers:
+      type: object
+      properties:
+        carriers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Carrier'
+        carrier:
+            $ref: '#/components/schemas/Carrier'

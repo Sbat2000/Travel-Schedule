@@ -331,6 +331,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StationSchedule'
+  /v3.0/thread/:
+    get:
+      tags:
+        - Список станций следования
+      summary: Список станций следования
+      operationId: getThread
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: uid
+          in: query
+          description: Идентификатор нитки в Яндекс Расписаниях.
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: Код станции отправления. Должен быть указан в системе кодирования
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: Код станции прибытия. Должен быть указан в системе кодирования.
+          required: false
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: Формат ответа. json, xml
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: Язык возвращаемой информации, в формате <код языка>_<код страны>
+          required: false
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: >-
+            Дата, на которую необходимо получить список станций следования.
+            Должна быть указана в формате, соответствующем стандарту ISO 8601.
+            Например, YYYY-MM-DD
+          required: false
+          schema:
+            type: string
+        - name: show_systems
+          in: query
+          description: >-
+            Cистеме кодирования, в которой необходимо получить коды станций (в
+            элементе ответа codes, вложенном в элемент station).
+          required: false
+          schema:
+            type: string
+            enum:
+              - yandex
+              - esr
+              - all
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleThread'
 components:
   schemas:
     Stations:
@@ -364,10 +435,10 @@ components:
         vehicle:
           type: string
         transport_subtype:
-          $ref: '#/components/schemas/TransportSsubtype'
+          $ref: '#/components/schemas/TransportSubtype'
         express_type:
           type: string
-    TransportSsubtype:
+    TransportSubtype:
       type: object
       properties:
         color:
@@ -407,6 +478,15 @@ components:
         logo:
           type: string
         email:
+          type: string
+    CarrierForThread:
+      type: object
+      properties:
+        code:
+          type: integer
+        codes:
+          $ref: '#/components/schemas/CarrierCodes'
+        title:
           type: string
     Interval:
       type: object
@@ -455,6 +535,34 @@ components:
           type: integer
         type_choices:
           $ref: '#/components/schemas/Schedule'
+    CodesForStation:
+      type: object
+      properties:
+        express:
+          type: string
+        yandex:
+          type: string
+        esr:
+          type: string
+    StationForThread:
+      type: object
+      properties:
+        codes:
+          $ref: '#/components/schemas/CodesForStation'
+        title:
+          type: string
+        short_title:
+          type: string
+        popular_title:
+          type: string
+        station_type:
+          type: string
+        station_type_name:
+          type: string
+        code:
+          type: string
+        type:
+          type: string
     Schedule:
       type: object
       properties:
@@ -653,3 +761,59 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Direction'
+    Stop:
+      type: object
+      properties:
+        arrival:
+          type: string
+        departure:
+          type: string
+        terminal:
+          type: string
+        platform:
+          type: string
+        station:
+          $ref: '#/components/schemas/StationForThread'
+    SingleThread:
+      type: object
+      properties:
+        except_days:
+          type: string
+        arrival_date:
+          type: string
+        from:
+          type: string
+        uid:
+          type: string
+        title:
+          type: string
+        interval:
+          $ref: '#/components/schemas/Interval'
+        departure_date:
+          type: string
+        start_time:
+          type: string
+        number:
+          type: string
+        short_title:
+          type: string
+        days:
+          type: string
+        to:
+          type: string
+        carrier:
+          $ref: '#/components/schemas/CarrierForThread'
+        transport_type:
+          type: string
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop'
+        vehicle:
+          type: string
+        start_date:
+          type: string
+        transport_subtype:
+          $ref: '#/components/schemas/TransportSubtype'
+        express_type:
+          type: string

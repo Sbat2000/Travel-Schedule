@@ -19,6 +19,7 @@
 		E2DE22962B9C88AB0027F299 /* CopyrightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE22952B9C88AB0027F299 /* CopyrightService.swift */; };
 		E2DE229A2B9C89470027F299 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE22992B9C89470027F299 /* Constants.swift */; };
 		E2DE229C2B9CADA90027F299 /* SearchRouteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE229B2B9CADA90027F299 /* SearchRouteService.swift */; };
+		E2DE229F2B9D90580027F299 /* StationScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE229E2B9D90580027F299 /* StationScheduleService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		E2DE22952B9C88AB0027F299 /* CopyrightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightService.swift; sourceTree = "<group>"; };
 		E2DE22992B9C89470027F299 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E2DE229B2B9CADA90027F299 /* SearchRouteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouteService.swift; sourceTree = "<group>"; };
+		E2DE229E2B9D90580027F299 /* StationScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationScheduleService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				E231099D2B99ECDB00A2B297 /* NearestStationsService.swift */,
 				E2DE22952B9C88AB0027F299 /* CopyrightService.swift */,
 				E2DE229B2B9CADA90027F299 /* SearchRouteService.swift */,
+				E2DE229E2B9D90580027F299 /* StationScheduleService.swift */,
 			);
 			path = Servicies;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 				E231099E2B99ECDB00A2B297 /* NearestStationsService.swift in Sources */,
 				E29C56B72B90C5350024E9C5 /* Travel_ScheduleApp.swift in Sources */,
 				E2DE22962B9C88AB0027F299 /* CopyrightService.swift in Sources */,
+				E2DE229F2B9D90580027F299 /* StationScheduleService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

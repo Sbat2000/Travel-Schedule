@@ -4,82 +4,82 @@ info:
   description: API Яндекс.Расписаний
   version: 3.0.0
 servers:
-- url: https://api.rasp.yandex.net
+  - url: https://api.rasp.yandex.net
 tags:
-- name: Апи Яндекс расписаний
-  description: Апи Яндекс расписаний
+  - name: Апи Яндекс расписаний
+    description: Апи Яндекс расписаний
 paths:
   /v3.0/nearest_stations/:
     get:
       tags:
-      - Список ближайших станций
+        - Список ближайших станций
       summary: Список ближайших станций
       operationId: getNearestStations
       parameters:
-      - name: apikey
-        in: query
-        description: API key
-        required: true
-        schema:
-          type: string
-      - name: lat
-        in: query
-        description: широта
-        required: true
-        schema:
-          type: number
-      - name: lng
-        in: query
-        description: долгота
-        required: true
-        schema:
-          type: number
-      - name: distance
-        in: query
-        description: радиус охвата
-        required: true
-        schema:
-          type: integer
-      - name: format
-        in: query
-        description: json или xml
-        required: false
-        schema:
-          type: string
-      - name: lang
-        in: query
-        description: lang
-        required: false
-        schema:
-          type: string
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: lat
+          in: query
+          description: широта
+          required: true
+          schema:
+            type: number
+        - name: lng
+          in: query
+          description: долгота
+          required: true
+          schema:
+            type: number
+        - name: distance
+          in: query
+          description: радиус охвата
+          required: true
+          schema:
+            type: integer
+        - name: format
+          in: query
+          description: json или xml
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: lang
+          required: false
+          schema:
+            type: string
       responses:
-        "200":
+        '200':
           description: success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Stations'
   /v3.0/copyright/:
-   get:
+    get:
       tags:
-      - Копирайт
+        - Копирайт
       summary: Копирайт Яндекс Расписания
       operationId: getCopyright
       parameters:
-      - name: apikey
-        in: query
-        description: API key
-        required: true
-        schema:
-          type: string
-      - name: format
-        in: query
-        description: json или xml
-        required: false
-        schema:
-          type: string
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: json или xml
+          required: false
+          schema:
+            type: string
       responses:
-        "200":
+        '200':
           description: success
           content:
             application/json:
@@ -88,118 +88,249 @@ paths:
   /v3.0/search/:
     get:
       tags:
-      - Расписание рейсов между станциями
+        - Расписание рейсов между станциями
       summary: Расписание рейсов между станциями
       operationId: getRoutes
       parameters:
-      - name: apikey
-        in: query
-        description: API key
-        required: true
-        schema:
-          type: string
-      - name: from
-        in: query
-        description: Код станции отправления
-        required: true
-        schema:
-          type: string
-      - name: to
-        in: query
-        description: Код станции прибытия
-        required: true
-        schema:
-          type: string
-      - name: format
-        in: query
-        description: json или xml
-        required: false
-        schema:
-          type: string
-      - name: lang
-        in: query
-        description: lang
-        required: false
-        schema:
-          type: string
-      - name: date
-        in: query
-        description: Дата в формате YYYY-MM-DD (ISO 8601)
-        required: false
-        schema:
-          type: string
-      - name: transport_types
-        in: query
-        description: Тип транспортного средства.
-        required: false
-        schema:
-          type: string
-          enum:
-           - plane
-           - train
-           - suburban
-           - bus
-           - water
-           - helicopter
-      - name: system
-        in: query
-        description: Система кодирования, в которой указывается код станции отправления и код станции прибытия (параметры from, to) в запросе
-        required: false
-        schema:
-          type: string
-          enum:
-           - yandex
-           - iata
-           - sirena
-           - express
-           - esr
-      - name: show_systems
-        in: query
-        description: Система кодирования, коды которой следует добавить к описанию станций в результатах поиска (элемент codes, вложенный в элементы from и to)
-        required: false
-        schema:
-          type: string
-          enum:
-           - yandex
-           - esr
-      - name: offset
-        in: query
-        description: Смещение относительно первого результата поиска. Например, если вам не нужны первые 10 результатов поиска, задайте для параметра значение «10». Значение по умолчанию — 0.
-        required: false
-        schema:
-          type: integer
-      - name: limit
-        in: query
-        description: Максимальное количество результатов поиска в ответе.Значение по умолчанию — 100.
-        required: false
-        schema:
-          type: integer
-      - name: add_days_mask
-        in: query
-        description: Признак, который указывает, что для каждой нитки в ответе следует вернуть календарь хождения — элемент schedule, вложенный в элемент segments.
-        required: false
-        schema:
-          type: boolean
-      - name: result_timezone
-        in: query
-        description: часовой пояс. Если параметр не передан, каждая дата и время в ответе будут указаны в часовом поясе соответствующей станции.
-        required: false
-        schema:
-          type: string
-      - name: transfers
-        in: query
-        description: Признак, разрешающий добавить к результатам поиска маршруты с пересадками.
-        required: false
-        schema:
-          type: boolean
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: Код станции отправления
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: Код станции прибытия
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: json или xml
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: lang
+          required: false
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: Дата в формате YYYY-MM-DD (ISO 8601)
+          required: false
+          schema:
+            type: string
+        - name: transport_types
+          in: query
+          description: Тип транспортного средства.
+          required: false
+          schema:
+            type: string
+            enum:
+              - plane
+              - train
+              - suburban
+              - bus
+              - water
+              - helicopter
+        - name: system
+          in: query
+          description: >-
+            Система кодирования, в которой указывается код станции отправления и
+            код станции прибытия (параметры from, to) в запросе
+          required: false
+          schema:
+            type: string
+            enum:
+              - yandex
+              - iata
+              - sirena
+              - express
+              - esr
+        - name: show_systems
+          in: query
+          description: >-
+            Система кодирования, коды которой следует добавить к описанию
+            станций в результатах поиска (элемент codes, вложенный в элементы
+            from и to)
+          required: false
+          schema:
+            type: string
+            enum:
+              - yandex
+              - esr
+        - name: offset
+          in: query
+          description: >-
+            Смещение относительно первого результата поиска. Например, если вам
+            не нужны первые 10 результатов поиска, задайте для параметра
+            значение «10». Значение по умолчанию — 0.
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: >-
+            Максимальное количество результатов поиска в ответе.Значение по
+            умолчанию — 100.
+          required: false
+          schema:
+            type: integer
+        - name: add_days_mask
+          in: query
+          description: >-
+            Признак, который указывает, что для каждой нитки в ответе следует
+            вернуть календарь хождения — элемент schedule, вложенный в элемент
+            segments.
+          required: false
+          schema:
+            type: boolean
+        - name: result_timezone
+          in: query
+          description: >-
+            часовой пояс. Если параметр не передан, каждая дата и время в ответе
+            будут указаны в часовом поясе соответствующей станции.
+          required: false
+          schema:
+            type: string
+        - name: transfers
+          in: query
+          description: >-
+            Признак, разрешающий добавить к результатам поиска маршруты с
+            пересадками.
+          required: false
+          schema:
+            type: boolean
       responses:
-        "200":
+        '200':
           description: success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Routes'
-
+  /v3.0/schedule/:
+    get:
+      tags:
+        - Расписание рейсов по станции
+      summary: Расписание рейсов по станции
+      operationId: getSchedule
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: station
+          in: query
+          description: station code
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: json или xml
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: lang
+          required: false
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: Дата в формате YYYY-MM-DD (ISO 8601)
+          required: false
+          schema:
+            type: string
+        - name: transport_types
+          in: query
+          description: Тип транспортного средства.
+          required: false
+          schema:
+            type: string
+            enum:
+              - plane
+              - train
+              - suburban
+              - bus
+              - water
+              - helicopter
+        - name: direction
+          in: query
+          description: station code
+          required: false
+          schema:
+            type: string
+        - name: event
+          in: query
+          description: событие, которое ищем. departure или arrival
+          required: false
+          schema:
+            type: string
+            enum:
+              - departure
+              - arrival
+        - name: system
+          in: query
+          description: >-
+            Система кодирования, в которой указывается код станции отправления и
+            код станции прибытия (параметры from, to) в запросе
+          required: false
+          schema:
+            type: string
+            enum:
+              - yandex
+              - iata
+              - sirena
+              - express
+              - esr
+        - name: show_systems
+          in: query
+          description: >-
+            Система кодирования, коды которой следует добавить к описанию
+            станций в результатах поиска (элемент codes, вложенный в элементы
+            from и to)
+          required: false
+          schema:
+            type: string
+            enum:
+              - yandex
+              - esr
+              - all
+        - name: result_timezone
+          in: query
+          description: >-
+            часовой пояс. Если параметр не передан, каждая дата и время в ответе
+            будут указаны в часовом поясе соответствующей станции.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: >-
+            Максимальное количество результатов поиска в ответе.Значение по
+            умолчанию — 100.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationSchedule'
 components:
   schemas:
     Stations:
@@ -286,7 +417,6 @@ components:
           type: string
         begin_time:
           type: string
-          
     Pagination:
       type: object
       properties:
@@ -403,8 +533,6 @@ components:
             $ref: '#/components/schemas/Segment'
         search:
           $ref: '#/components/schemas/Search'
-            
-        
     IntervalSegment:
       type: object
       properties:
@@ -432,14 +560,11 @@ components:
           type: string
         arrival_platform:
           type: string
-
-# ответ копирайта:
-
     CopyrightAnswer:
       type: object
       properties:
         copyright:
-         $ref: '#/components/schemas/Copyright'
+          $ref: '#/components/schemas/Copyright'
     Copyright:
       type: object
       properties:
@@ -459,3 +584,72 @@ components:
           type: string
         text:
           type: string
+    ScheduleItem:
+      type: object
+      properties:
+        except_days:
+          type: string
+        arrival:
+          type: string
+        thread:
+          $ref: '#/components/schemas/Thread'
+        is_fuzzy:
+          type: string
+        days:
+          type: string
+        stops:
+          type: string
+        departure:
+          type: string
+        terminal:
+          type: string
+        platform:
+          type: string
+    IntervalScheduleItem:
+      type: object
+      properties:
+        except_days:
+          type: string
+        thread:
+          $ref: '#/components/schemas/Thread'
+        is_fuzzy:
+          type: string
+        days:
+          type: string
+        stops:
+          type: string
+        terminal:
+          type: string
+        platform:
+          type: string
+    Direction:
+      type: object
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+    StationSchedule:
+      type: object
+      properties:
+        date:
+          type: string
+          example: '2017-10-28'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        station:
+          $ref: '#/components/schemas/Station'
+        schedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleItem'
+        interval_schedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntervalScheduleItem'
+        schedule_direction:
+          $ref: '#/components/schemas/Direction'
+        directions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Direction'

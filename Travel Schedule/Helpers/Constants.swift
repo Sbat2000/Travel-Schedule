@@ -12,5 +12,10 @@ struct Constants {
         static let irktusk = "c63"
         static let moscow = "c213"
     }
+    
+    struct StationCode {
+        static let airportIrkutst = "s9600174"
+    }
+    
     static let apiKey = "6000100a-5e89-4cc3-b086-926ee56549df"
 }

@@ -22,6 +22,10 @@ struct ContentView: View {
             Button("Показать маршрут Иркутск - Москва") {
                 getRoutes()
             }
+            .padding()
+            Button("Показать расписание аэропорта Иркутск") {
+                getRoutes()
+            }
         }
         .padding()
     }
@@ -74,6 +78,22 @@ struct ContentView: View {
             do {
                 let copyright = try await service.getRoutes(from: Constants.Cities.irktusk, to: Constants.Cities.moscow, limit: 1)
                 print(copyright)
+            } catch {
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func getScheduleFor() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = StationScheduleService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let schedule = try await service.getScheduleFor(station: Constants.StationCode.airportIrkutst, limit: 5, date: "2024-03-10")
             } catch {
                 print("Ошибка  \(error)")
             }

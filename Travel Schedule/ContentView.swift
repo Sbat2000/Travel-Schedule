@@ -7,6 +7,7 @@
 
 import SwiftUI
 import OpenAPIURLSession
+import OpenAPIRuntime
 
 struct ContentView: View {
     var body: some View {
@@ -37,6 +38,10 @@ struct ContentView: View {
             .padding()
             Button("Показать информацию о перевозчике") {
                 getCarrierInfo()
+            }
+            .padding()
+            Button("Показать все станции. ВНИМАНИЕ! Большой объем данных: 40 мб") {
+                getAllStations()
             }
         }
         .padding()
@@ -158,6 +163,23 @@ struct ContentView: View {
             do {
                 let carrier = try await service.getCarrier(code: "156")
                 print(carrier)
+            } catch {
+                print("Ошибка  \(error)")
+            }
+        }
+    }
+    
+    func getAllStations() {
+        let client = Client (
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+        let service = AllStationsService(client: client, apikey: Constants.apiKey)
+        
+        Task {
+            do {
+                let stations = try await service.getAllStations()
+                print(stations)
             } catch {
                 print("Ошибка  \(error)")
             }

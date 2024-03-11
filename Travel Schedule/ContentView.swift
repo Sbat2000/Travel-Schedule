@@ -52,10 +52,11 @@ struct ContentView: View {
     func stations() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
         
-        let service = NearestStationsService(client: client, apikey: Constants.apiKey)
+        let service = NearestStationsService(client: client)
         
         Task {
             do {
@@ -70,9 +71,10 @@ struct ContentView: View {
     func copyright() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = CopyrightService(client: client, apikey: Constants.apiKey)
+        let service = CopyrightService(client: client)
         
         Task {
             do {
@@ -87,9 +89,10 @@ struct ContentView: View {
     func getRoutes() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = SearchRouteService(client: client, apikey: Constants.apiKey)
+        let service = SearchRouteService(client: client)
         
         Task {
             do {
@@ -104,9 +107,10 @@ struct ContentView: View {
     func getScheduleFor() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = StationScheduleService(client: client, apikey: Constants.apiKey)
+        let service = StationScheduleService(client: client)
         
         Task {
             do {
@@ -121,9 +125,10 @@ struct ContentView: View {
     func getThread() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = ThreadService(client: client, apikey: Constants.apiKey)
+        let service = ThreadService(client: client)
         
         Task {
             do {
@@ -138,9 +143,10 @@ struct ContentView: View {
     func getNearestCity() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = NearestCityService(client: client, apikey: Constants.apiKey)
+        let service = NearestCityService(client: client)
         
         Task {
             do {
@@ -155,9 +161,10 @@ struct ContentView: View {
     func getCarrierInfo() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = CarrierInfoService(client: client, apikey: Constants.apiKey)
+        let service = CarrierInfoService(client: client)
         
         Task {
             do {
@@ -172,14 +179,19 @@ struct ContentView: View {
     func getAllStations() {
         let client = Client (
             serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
+            transport: URLSessionTransport(),
+            middlewares: [AuthenticationMiddleware(authorizationHeaderFieldValue: Constants.apiKey)]
         )
-        let service = AllStationsService(client: client, apikey: Constants.apiKey)
+        let service = AllStationsService(client: client)
         
         Task {
             do {
-                let stations = try await service.getAllStations()
-                print(stations)
+                let dataRaw = try await service.getAllStations()
+                let data = try await Data(collecting: dataRaw, upTo: 50*1024*1024)
+                let stations = try JSONDecoder().decode(Components.Schemas.AllStations.self, from: data)
+                print(stations.countries?.count)
+                //Внимание: распечатка всех станций в консоль подвешает xcode на некоторое время
+                //print(stations)
             } catch {
                 print("Ошибка  \(error)")
             }

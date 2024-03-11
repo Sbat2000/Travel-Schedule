@@ -19,7 +19,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: lat
@@ -69,7 +69,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: format
@@ -95,7 +95,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: from
@@ -226,7 +226,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: station
@@ -341,7 +341,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: uid
@@ -412,7 +412,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: lat
@@ -462,7 +462,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: code
@@ -512,7 +512,7 @@ paths:
         - name: apikey
           in: query
           description: API key
-          required: true
+          required: false
           schema:
             type: string
         - name: format
@@ -534,6 +534,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AllStations'
+            text/html:
+              schema: {}
 components:
   schemas:
     Stations:
@@ -995,10 +997,6 @@ components:
           type: string
         title:
           type: string
-        longitude:
-          type: number
-        latitude:
-          type: number
         transport_type:
           type: string
     Settlements:

@@ -16,15 +16,13 @@ protocol ThreadServiceProtocol {
 
 final class ThreadService: ThreadServiceProtocol {
     private let client: Client
-    private let apikey: String
     
-    init(client: Client, apikey: String) {
+    init(client: Client) {
         self.client = client
-        self.apikey = apikey
     }
     
     func getThread(threadUID: String) async throws -> Thread {
-        let response = try await client .getThread(query: .init(apikey: apikey, uid: threadUID))
+        let response = try await client .getThread(query: .init(uid: threadUID))
         return try response.ok.body.json
     }
 }

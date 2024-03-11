@@ -16,15 +16,13 @@ protocol SearchRouteServiceProtocol {
 
 final class SearchRouteService: SearchRouteServiceProtocol {
     private let client: Client
-    private let apikey: String
     
-    init(client: Client, apikey: String) {
+    init(client: Client) {
         self.client = client
-        self.apikey = apikey
     }
     
     func getRoutes(from: String, to: String, limit: Int?) async throws -> Routes {
-        let response = try await client .getRoutes(query: .init(apikey: apikey, from: from, to: to, limit: limit, transfers: false))
+        let response = try await client .getRoutes(query: .init(from: from, to: to, limit: limit, transfers: false))
         return try response.ok.body.json
     }
 }
